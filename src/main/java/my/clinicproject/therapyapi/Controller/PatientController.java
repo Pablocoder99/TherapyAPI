@@ -1,16 +1,27 @@
 package my.clinicproject.therapyapi.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import my.clinicproject.therapyapi.Patient.Patient;
+import my.clinicproject.therapyapi.Service.PatientService;
+import my.clinicproject.therapyapi.dto.MessageResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/patient")
 public class PatientController {
 
-    @GetMapping
-    private String hello() {
-        return "Hi!";
+    private PatientService patientService;
+
+    @Autowired
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    private MessageResponseDTO createPatient(@RequestBody Patient patient) {
+        return patientService.createPatient(patient);
     }
 
 }
