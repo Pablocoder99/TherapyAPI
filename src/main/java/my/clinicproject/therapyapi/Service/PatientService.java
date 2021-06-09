@@ -1,5 +1,6 @@
 package my.clinicproject.therapyapi.Service;
 
+import my.clinicproject.therapyapi.Exceptions.PatientNotFoundException;
 import my.clinicproject.therapyapi.Mapper.PatientMapper;
 import my.clinicproject.therapyapi.Patient.Patient;
 import my.clinicproject.therapyapi.Repository.PatientRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +42,11 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
 
-    
+
+    public PatientDTO listById(Integer id) throws PatientNotFoundException {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException(id));
+
+        return patientMapper.toDTO(patient);
+    }
 }

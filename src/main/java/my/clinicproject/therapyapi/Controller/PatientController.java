@@ -1,5 +1,6 @@
 package my.clinicproject.therapyapi.Controller;
 
+import my.clinicproject.therapyapi.Exceptions.PatientNotFoundException;
 import my.clinicproject.therapyapi.Patient.Patient;
 import my.clinicproject.therapyapi.Service.PatientService;
 import my.clinicproject.therapyapi.dto.Request.PatientDTO;
@@ -31,6 +32,11 @@ public class PatientController {
     @GetMapping
     public List<PatientDTO> listAll() {
         return patientService.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public PatientDTO listById(@PathVariable Integer id) throws PatientNotFoundException {
+        return patientService.listById(id);
     }
 
 }
