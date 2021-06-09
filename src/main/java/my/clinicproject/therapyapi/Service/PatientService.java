@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,15 +24,11 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    private Patient exists(Integer id) throws PatientNotFoundException {
-        return patientRepository.findById(id)
-                .orElseThrow(() -> new PatientNotFoundException(id));
-    }
-
     public MessageResponseDTO createPatient(PatientDTO patientDTO) {
         Patient patientToSave = patientMapper.toModel(patientDTO);
 
         Patient savedPatient = patientRepository.save(patientToSave);
+
         return MessageResponseDTO
                 .builder()
                 .message("Created Patient with ID "+savedPatient.getId()+". Accompained by Dr(a) "+savedPatient.getProResponsibleName())
@@ -56,5 +51,23 @@ public class PatientService {
     public void removeById(Integer id) throws PatientNotFoundException {
         exists(id);
         patientRepository.deleteById(id);
+    }
+
+    public MessageResponseDTO updateById(Integer id, PatientDTO patientDTO) throws PatientNotFoundException {
+        exists(id);
+
+        Patient patientToUpdate = patientMapper.toModel(patientDTO);
+
+        Patient updatedPatient = patientRepository.save(patientToUpdate);
+
+        return MessageResponseDTO
+                .builder()
+                .message("Updated Patient with ID "+updatedPatient.getId())
+                .build();
+    }
+
+    private Patient exists(Integer id) throws PatientNotFoundException {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException(id));
     }
 }
