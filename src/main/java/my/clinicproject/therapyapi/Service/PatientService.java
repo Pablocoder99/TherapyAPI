@@ -25,6 +25,11 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
+    private Patient exists(Integer id) throws PatientNotFoundException {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException(id));
+    }
+
     public MessageResponseDTO createPatient(PatientDTO patientDTO) {
         Patient patientToSave = patientMapper.toModel(patientDTO);
 
@@ -44,9 +49,12 @@ public class PatientService {
 
 
     public PatientDTO listById(Integer id) throws PatientNotFoundException {
-        Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new PatientNotFoundException(id));
-
+        Patient patient = exists(id);
         return patientMapper.toDTO(patient);
+    }
+
+    public void removeById(Integer id) throws PatientNotFoundException {
+        exists(id);
+        patientRepository.deleteById(id);
     }
 }

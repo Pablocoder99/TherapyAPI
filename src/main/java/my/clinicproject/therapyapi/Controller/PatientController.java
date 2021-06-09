@@ -39,4 +39,10 @@ public class PatientController {
         return patientService.listById(id);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeById(@PathVariable Integer id) throws PatientNotFoundException {
+        patientService.removeById(id);
+    }
+
 }
