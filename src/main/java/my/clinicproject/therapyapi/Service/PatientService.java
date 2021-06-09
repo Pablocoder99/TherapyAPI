@@ -8,6 +8,9 @@ import my.clinicproject.therapyapi.dto.Response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PatientService {
 
@@ -29,4 +32,13 @@ public class PatientService {
                 .message("Created Patient with ID "+savedPatient.getId()+". Accompained by Dr(a) "+savedPatient.getProResponsibleName())
                 .build();
     }
+
+    public List<PatientDTO> listAll() {
+        List<Patient> allPatients = patientRepository.findAll();
+        return allPatients.stream()
+                .map(patient -> patientMapper.toDTO(patient))
+                .collect(Collectors.toList());
+    }
+
+    
 }
