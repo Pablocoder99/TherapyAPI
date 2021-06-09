@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Status {
+public enum TherapyStatus {
 
     INITIAL("Initial"),
     DEVELOPMENT("Development"),

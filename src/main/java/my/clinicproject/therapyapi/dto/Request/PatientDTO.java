@@ -1,4 +1,5 @@
-package my.clinicproject.therapyapi.Patient;
+package my.clinicproject.therapyapi.dto.Request;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,37 +8,39 @@ import lombok.NoArgsConstructor;
 import my.clinicproject.therapyapi.Enums.TherapyStatus;
 import my.clinicproject.therapyapi.Enums.TherapyType;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-@Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Patient {
+public class PatientDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @Size(min = 9, max = 100)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @NotEmpty
+    @Size(min = 11, max = 14)
     private String cpf;
 
-    private LocalDate birthDate;
+    private String birthDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotEmpty
     private TherapyType therapyType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotEmpty
     private TherapyStatus therapyStatus;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String proResponsibleName;
 
 }

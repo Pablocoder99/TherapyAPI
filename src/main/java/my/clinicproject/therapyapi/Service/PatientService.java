@@ -1,8 +1,10 @@
 package my.clinicproject.therapyapi.Service;
 
+import my.clinicproject.therapyapi.Mapper.PatientMapper;
 import my.clinicproject.therapyapi.Patient.Patient;
 import my.clinicproject.therapyapi.Repository.PatientRepository;
-import my.clinicproject.therapyapi.dto.MessageResponseDTO;
+import my.clinicproject.therapyapi.dto.Request.PatientDTO;
+import my.clinicproject.therapyapi.dto.Response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +13,20 @@ public class PatientService {
 
     private PatientRepository patientRepository;
 
+    private final PatientMapper patientMapper = PatientMapper.INSTANCE;
+
     @Autowired
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
 
-    public MessageResponseDTO createPatient(Patient patient) {
-        Patient savedPatient = patientRepository.save(patient);
+    public MessageResponseDTO createPatient(PatientDTO patientDTO) {
+        Patient patientToSave = patientMapper.toModel(patientDTO);
+
+        Patient savedPatient = patientRepository.save(patientToSave);
         return MessageResponseDTO
                 .builder()
-                .message("Created Patient with ID "+patient.getId()+". Accompained by Dr(a) "+patient.getProResponsibleName())
+                .message("Created Patient with ID "+savedPatient.getId()+". Accompained by Dr(a) "+savedPatient.getProResponsibleName())
                 .build();
     }
 }

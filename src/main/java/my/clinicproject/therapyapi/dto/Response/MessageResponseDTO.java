@@ -1,4 +1,4 @@
-package my.clinicproject.therapyapi.dto;
+package my.clinicproject.therapyapi.dto.Response;
 
 import lombok.Builder;
 import lombok.Data;
