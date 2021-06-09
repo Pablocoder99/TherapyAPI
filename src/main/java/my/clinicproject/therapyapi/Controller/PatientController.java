@@ -1,7 +1,7 @@
 package my.clinicproject.therapyapi.Controller;
 
+import lombok.AllArgsConstructor;
 import my.clinicproject.therapyapi.Exceptions.PatientNotFoundException;
-import my.clinicproject.therapyapi.Patient.Patient;
 import my.clinicproject.therapyapi.Service.PatientService;
 import my.clinicproject.therapyapi.dto.Request.PatientDTO;
 import my.clinicproject.therapyapi.dto.Response.MessageResponseDTO;
@@ -14,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/patient")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientController {
 
     private PatientService patientService;
-
-    @Autowired
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

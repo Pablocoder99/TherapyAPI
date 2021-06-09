@@ -1,5 +1,6 @@
 package my.clinicproject.therapyapi.Service;
 
+import lombok.AllArgsConstructor;
 import my.clinicproject.therapyapi.Exceptions.PatientNotFoundException;
 import my.clinicproject.therapyapi.Mapper.PatientMapper;
 import my.clinicproject.therapyapi.Patient.Patient;
@@ -13,16 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientService {
 
     private PatientRepository patientRepository;
 
     private final PatientMapper patientMapper = PatientMapper.INSTANCE;
-
-    @Autowired
-    public PatientService(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
 
     public MessageResponseDTO createPatient(PatientDTO patientDTO) {
         Patient patientToSave = patientMapper.toModel(patientDTO);
