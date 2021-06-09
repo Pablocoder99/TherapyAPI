@@ -39,6 +39,13 @@ public class PatientController {
         return patientService.listById(id);
     }
 
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateById(@PathVariable Integer id, @RequestBody @Valid PatientDTO patientDTO) throws PatientNotFoundException {
+        return patientService.updateById(id, patientDTO);
+    }
+
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeById(@PathVariable Integer id) throws PatientNotFoundException {
