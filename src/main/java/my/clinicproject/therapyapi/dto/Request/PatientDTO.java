@@ -1,6 +1,7 @@
 package my.clinicproject.therapyapi.dto.Request;
 
 
+import br.com.caelum.stella.bean.validation.CPF;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class PatientDTO {
     private String name;
 
     @NotEmpty
-    @Size(min = 11, max = 14)
+    @CPF
     private String cpf;
 
     private String birthDate;
